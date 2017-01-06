@@ -4,7 +4,7 @@
 
 # Site
 title: Horbie Blog
-subtitle: peace
+subtitle: 
 description:
 author: Horbie Huo
 language: 
@@ -63,7 +63,8 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: kael
+# theme: landscape
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
