@@ -28,8 +28,8 @@ archive_type: 'monthly'
 show_count: false
 
 # Miscellaneous
-google_analytics:
-baidu_analytics: 'fc91010a1638e0d0f279c5253ffd0ae1'
+google_analytics: 'UA-98266527-2'
+baidu_analytics: 'c2aeb8f595a477a6bbd654908aefd7bb'
 favicon: /favicon.png
 twitter:
 google_plus:
