@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Horbie Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Horbie Blog">
+<meta property="og:url" content="http://blog.codeme.site/index.html">
+<meta property="og:site_name" content="Horbie Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Horbie Blog">
+  
+    <link rel="alternate" href="/atom.xml" title="Horbie Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-98266527-2', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+<!-- Baidu Analytics -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+//   hm.src = "https://hm.baidu.com/hm.js?fc91010a1638e0d0f279c5253ffd0ae1";
+  hm.src = "https://hm.baidu.com/hm.js?" + 'c2aeb8f595a477a6bbd654908aefd7bb';
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<!-- End Baidu Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Horbie Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Record Mind</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.codeme.site"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-python-使用-logging" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/01/python-使用-logging/" class="article-date">
+  <time datetime="2017-06-01T04:12:53.000Z" itemprop="datePublished">2017-06-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/01/python-使用-logging/">python 使用 logging</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>首先是json格式的配置文件, 其中配置的有 DatagramHandler ，udp形式的日志<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"version"</span>: <span class="number">1</span>,</div><div class="line">    <span class="attr">"disable_existing_loggers"</span>: <span class="literal">false</span>,</div><div class="line">    <span class="attr">"formatters"</span>: &#123;</div><div class="line">        <span class="attr">"simple"</span>: &#123;</div><div class="line">            <span class="attr">"format"</span>: <span class="string">"%(asctime)s - %(name)s - %(levelname)s - %(message)s"</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="attr">"handlers"</span>: &#123;</div><div class="line">        <span class="attr">"console"</span>: &#123;</div><div class="line">            <span class="attr">"class"</span>: <span class="string">"logging.StreamHandler"</span>,</div><div class="line">            <span class="attr">"level"</span>: <span class="string">"DEBUG"</span>,</div><div class="line">            <span class="attr">"formatter"</span>: <span class="string">"simple"</span>,</div><div class="line">            <span class="attr">"stream"</span>: <span class="string">"ext://sys.stdout"</span></div><div class="line">        &#125;,</div><div class="line"></div><div class="line">        <span class="attr">"info_file_handler"</span>: &#123;</div><div class="line">            <span class="attr">"class"</span>: <span class="string">"logging.handlers.RotatingFileHandler"</span>,</div><div class="line">            <span class="attr">"level"</span>: <span class="string">"INFO"</span>,</div><div class="line">            <span class="attr">"formatter"</span>: <span class="string">"simple"</span>,</div><div class="line">            <span class="attr">"filename"</span>: <span class="string">"info.log"</span>,</div><div class="line">            <span class="attr">"maxBytes"</span>: <span class="number">10485760</span>,</div><div class="line">            <span class="attr">"backupCount"</span>: <span class="number">20</span>,</div><div class="line">            <span class="attr">"encoding"</span>: <span class="string">"utf8"</span></div><div class="line">        &#125;,</div><div class="line"></div><div class="line">        <span class="attr">"error_file_handler"</span>: &#123;</div><div class="line">            <span class="attr">"class"</span>: <span class="string">"logging.handlers.RotatingFileHandler"</span>,</div><div class="line">            <span class="attr">"level"</span>: <span class="string">"ERROR"</span>,</div><div class="line">            <span class="attr">"formatter"</span>: <span class="string">"simple"</span>,</div><div class="line">            <span class="attr">"filename"</span>: <span class="string">"errors.log"</span>,</div><div class="line">            <span class="attr">"maxBytes"</span>: <span class="number">10485760</span>,</div><div class="line">            <span class="attr">"backupCount"</span>: <span class="number">20</span>,</div><div class="line">            <span class="attr">"encoding"</span>: <span class="string">"utf8"</span></div><div class="line">        &#125;,</div><div class="line"></div><div class="line">        <span class="attr">"udp_handler"</span>: &#123;</div><div class="line">            <span class="attr">"class"</span>: <span class="string">"logging.handlers.DatagramHandler"</span>,</div><div class="line">            <span class="attr">"level"</span>: <span class="string">"INFO"</span>,</div><div class="line">            <span class="attr">"formatter"</span>: <span class="string">"simple"</span>,</div><div class="line">            <span class="attr">"host"</span>: <span class="string">"localhost"</span>,</div><div class="line">            <span class="attr">"port"</span>: <span class="number">11111</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="attr">"loggers"</span>: &#123;</div><div class="line">        <span class="attr">"lifemg"</span>: &#123;</div><div class="line">            <span class="attr">"level"</span>: <span class="string">"INFO"</span>,</div><div class="line">            <span class="attr">"handlers"</span>: [<span class="string">"udp_handler"</span>],</div><div class="line">            <span class="attr">"propagate"</span>: <span class="string">"no"</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="attr">"root"</span>: &#123;</div><div class="line">        <span class="attr">"level"</span>: <span class="string">"INFO"</span>,</div><div class="line">        <span class="attr">"handlers"</span>: [<span class="string">"console"</span>]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>程序中配置log，并使用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">import</span> logging</div><div class="line"><span class="keyword">import</span> logging.config</div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">setup_logging</span><span class="params">(</span></span></div><div class="line">    default_path=<span class="string">'logging.json'</span>, </div><div class="line">    default_level=logging.INFO,</div><div class="line">    env_key=<span class="string">'LOG_CFG'</span></div><div class="line">):</div><div class="line">    <span class="string">"""Setup logging configuration</span></div><div class="line"></div><div class="line">    """</div><div class="line">    path = default_path</div><div class="line">    value = os.getenv(env_key, <span class="keyword">None</span>)</div><div class="line">    <span class="keyword">if</span> value:</div><div class="line">        path = value</div><div class="line">    <span class="keyword">if</span> os.path.exists(path):</div><div class="line">        <span class="keyword">with</span> open(path, <span class="string">'rt'</span>) <span class="keyword">as</span> f:</div><div class="line">            config = json.load(f)</div><div class="line">        logging.config.dictConfig(config)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        logging.basicConfig(level=default_level)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    setup_logging()</div><div class="line">    logger = logging.getLogger(<span class="string">"lifemg"</span>)</div><div class="line">    logger.debug(<span class="string">"this is a debugmsg!"</span>)</div><div class="line">    logger.info(<span class="string">"this is a infomsg!"</span>)</div><div class="line">    logger.warn(<span class="string">"this is a warn msg!"</span>)</div><div class="line">    logger.error(<span class="string">"this is a error msg!"</span>)</div><div class="line">    logger.critical(<span class="string">"this is a critical msg!"</span>)</div></pre></td></tr></table></figure></p>
+<p>udp的服务端接受log, 只是接收，并未做任何处理<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket  </div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    address = (<span class="string">'localhost'</span>, <span class="number">11111</span>)  </div><div class="line">    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  </div><div class="line">    s.bind(address)  </div><div class="line">    <span class="keyword">print</span> <span class="string">"start udp: localhost:11111"</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        data, addr = s.recvfrom(<span class="number">2048</span>)</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> data:  </div><div class="line">            <span class="keyword">print</span> <span class="string">"client has exist"</span>  </div><div class="line">            <span class="keyword">break</span>  </div><div class="line">        <span class="keyword">print</span> <span class="string">"received:"</span>, len(data), <span class="string">"from"</span>, addr, <span class="string">"type:"</span>, type(data)</div><div class="line">    </div><div class="line">    s.close()</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.codeme.site/2017/06/01/python-使用-logging/" data-id="cj3dwx0z50007qb9js982y983" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/25/hello-world/" class="article-date">
+  <time datetime="2017-05-25T01:24:50.000Z" itemprop="datePublished">2017-05-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/25/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.codeme.site/2017/05/25/hello-world/" data-id="cj3dwx0yx0005qb9jbtxz96l4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Dockerfile-demo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/19/Dockerfile-demo/" class="article-date">
+  <time datetime="2017-05-19T08:13:49.000Z" itemprop="datePublished">2017-05-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/19/Dockerfile-demo/">Dockerfile demo</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一个简单的Dockerfile的demo</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">FROM</span> python:<span class="number">2.7</span>-slim</div><div class="line"><span class="keyword">MAINTAINER</span> XX &lt;XX@yy.com&gt;</div><div class="line"></div><div class="line"><span class="keyword">RUN</span> apt-get update &amp;&amp; \</div><div class="line">    apt-get install -y supervisor \</div><div class="line">    libmysqlclient-dev unzip libaio1 \</div><div class="line">    build-essential libssl-dev libffi-dev curl &amp;&amp; \</div><div class="line">    apt-get clean &amp;&amp; \</div><div class="line">    rm -rf /var/lib/apt/lists/* \</div><div class="line">        /tmp/* \</div><div class="line">        /var/tmp/*</div><div class="line"></div><div class="line"><span class="keyword">ENV</span> MYSQL_DATABASE tmp</div><div class="line"><span class="keyword">ENV</span> MYSQL_USER tmp</div><div class="line"><span class="keyword">ENV</span> MYSQL_PASSWORD tmp</div><div class="line"><span class="keyword">ENV</span> MYSQL_HOST mysql_db</div><div class="line"><span class="keyword">ENV</span> MYSQL_PORT <span class="number">3306</span></div><div class="line"><span class="keyword">ENV</span> HOST_IP <span class="string">'127.0.0.1'</span></div><div class="line"><span class="keyword">ENV</span> HOST_PORT <span class="number">5000</span></div><div class="line"><span class="keyword">ENV</span> GIT_BRANCH_NAME <span class="string">'UNKOWN'</span></div><div class="line"><span class="keyword">ENV</span> ES_HOST es_db</div><div class="line"><span class="keyword">ENV</span> ES_PORT <span class="number">9200</span></div><div class="line"><span class="keyword">ENV</span> REDIS_HOST redis_db</div><div class="line"><span class="keyword">ENV</span> REDIS_PORT <span class="number">6379</span></div><div class="line"><span class="keyword">ENV</span> FLASK_ENV docker</div><div class="line"></div><div class="line"><span class="keyword">WORKDIR</span> /opt/oracle/</div><div class="line"><span class="keyword">ADD</span> instantclient-basic-linux.x64-12.2.0.1.0.zip .</div><div class="line"><span class="keyword">ADD</span> instantclient-sdk-linux.x64-12.2.0.1.0.zip .</div><div class="line"><span class="keyword">RUN</span> unzip instantclient-basic-linux.x64-12.2.0.1.0.zip &amp;&amp; \</div><div class="line">    unzip instantclient-sdk-linux.x64-12.2.0.1.0.zip &amp;&amp; \</div><div class="line">    rm instantclient-basic-linux.x64-12.2.0.1.0.zip &amp;&amp; \</div><div class="line">    rm instantclient-sdk-linux.x64-12.2.0.1.0.zip &amp;&amp; \</div><div class="line">    cd instantclient_12_2 &amp;&amp; \</div><div class="line">    ln -s libclntsh.so.12.1 libclntsh.so &amp;&amp; \</div><div class="line">    ln -s libocci.so.12.1 libocci.so</div><div class="line"></div><div class="line"><span class="keyword">ENV</span> ORACLE_HOME <span class="string">"/opt/oracle/instantclient_12_2"</span></div><div class="line"><span class="keyword">ENV</span> DYLD_LIBRARY_PATH <span class="string">"$ORACLE_HOME:$ORACLE_HOME/sdk/oracle/ott:$DYLD_LIBRARY_PATH"</span></div><div class="line"><span class="keyword">ENV</span> LD_LIBRARY_PATH <span class="string">"$ORACLE_HOME/sdk/include:$LD_LIBRARY_PATH"</span></div><div class="line"></div><div class="line"><span class="keyword">RUN</span> curl https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh -o - | bash &amp;&amp; \</div><div class="line">    export NVM_DIR="/root/.nvm" &amp;&amp; . "$NVM_DIR/nvm.sh" &amp;&amp; \</div><div class="line">    nvm install v0.12.7 &amp;&amp; \</div><div class="line">    nvm use v0.12.7 &amp;&amp; \</div><div class="line">    npm config set user 0 &amp;&amp; npm config set unsafe-perm true &amp;&amp; \</div><div class="line">    npm install -g fis &amp;&amp; \</div><div class="line">    npm install -g fis-postprocessor-require-async &amp;&amp; \</div><div class="line">    npm install -g  fis-parser-ejs &amp;&amp; \</div><div class="line">    npm install -g  fis-parser-sass &amp;&amp; \</div><div class="line">    npm install -g  fis-postpackager-autoload</div><div class="line"></div><div class="line"><span class="keyword">WORKDIR</span> /opt/lifemg</div><div class="line"><span class="keyword">ADD</span> requirements.txt .</div><div class="line"><span class="keyword">RUN</span> pip --no-cache-dir --disable-pip-version-check install -r requirements.txt</div><div class="line"></div><div class="line"><span class="keyword">ADD</span> manage.py .</div><div class="line"><span class="keyword">ADD</span> scripts scripts</div><div class="line"><span class="keyword">ADD</span> configs configs</div><div class="line"><span class="keyword">ADD</span> lws lws</div><div class="line"></div><div class="line"><span class="keyword">RUN</span> ls -l &amp;&amp; pybabel compile -d ./lws/translations &amp;&amp; \</div><div class="line">    export NVM_DIR="/root/.nvm" &amp;&amp; . "$NVM_DIR/nvm.sh" &amp;&amp; \</div><div class="line">    nvm use v0.12.7 &amp;&amp; \</div><div class="line">    fis release --root ./lws/frontend/  -pcmd ./lws/ &amp;&amp; \</div><div class="line">    rm -rf $NVM_DIR</div><div class="line"></div><div class="line"><span class="comment"># RUN ln -s ./configs/supervisor_docker_app.conf /etc/supervisor/conf.d/supervisor_docker_app.conf</span></div><div class="line"></div><div class="line"><span class="keyword">EXPOSE</span> <span class="number">443</span></div><div class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></div><div class="line"></div><div class="line"><span class="comment"># CMD supervisorctl start lifemg &amp;&amp; tail -f /dev/null</span></div><div class="line"><span class="keyword">CMD</span> gunicorn -w 2 -b 0.0.0.0:80 -k sync --log-level debug manage:app &amp;&amp; tail -f /dev/null</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.codeme.site/2017/05/19/Dockerfile-demo/" data-id="cj3dwx0yg0000qb9je81mhnom" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-docker中安装cx-Oracle" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/17/docker中安装cx-Oracle/" class="article-date">
+  <time datetime="2017-05-17T00:31:31.000Z" itemprop="datePublished">2017-05-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/17/docker中安装cx-Oracle/">docker中安装cx-Oracle</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>下载下面两个压缩文件 <a href="http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html" target="_blank" rel="external">地址</a></p>
+<ul>
+<li>instantclient-basic-linux.x64-12.2.0.1.0.zip</li>
+<li>instantclient-sdk-linux.x64-12.2.0.1.0.zip </li>
+</ul>
+</li>
+<li><p>将下载的两个压缩包放至Dockerfile所在目录，或者镜像构建时可以访问的其他目录</p>
+</li>
+<li><p>docker 构建时使用的命令(部分)</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">RUN</span> apt-get update &amp;&amp; \</div><div class="line">    apt-get install -y  unzip libaio1 &amp;&amp; \</div><div class="line">    apt-get clean &amp;&amp; \</div><div class="line">    rm -rf /var/lib/apt/lists/* \</div><div class="line">        /tmp/* \</div><div class="line">        /var/tmp/*</div><div class="line"><span class="keyword">WORKDIR</span> /opt/oracle/</div><div class="line"><span class="keyword">ADD</span> instantclient-basic-linux.x64-12.2.0.1.0.zip .</div><div class="line"><span class="keyword">ADD</span> instantclient-sdk-linux.x64-12.2.0.1.0.zip .</div><div class="line"><span class="keyword">RUN</span> unzip instantclient-basic-linux.x64-12.2.0.1.0.zip &amp;&amp; \</div><div class="line">    unzip instantclient-sdk-linux.x64-12.2.0.1.0.zip &amp;&amp; \</div><div class="line">    cd instantclient_12_2 &amp;&amp; \</div><div class="line">    ln -s libclntsh.so.12.1 libclntsh.so &amp;&amp; \</div><div class="line">    ln -s libocci.so.12.1 libocci.so</div><div class="line"></div><div class="line"><span class="keyword">ENV</span> ORACLE_HOME <span class="string">"/opt/oracle/instantclient_12_2"</span></div><div class="line"><span class="keyword">ENV</span> DYLD_LIBRARY_PATH <span class="string">"$ORACLE_HOME:$ORACLE_HOME/sdk/oracle/ott:$DYLD_LIBRARY_PATH"</span></div><div class="line"><span class="keyword">ENV</span> LD_LIBRARY_PATH <span class="string">"$ORACLE_HOME/sdk/include:$LD_LIBRARY_PATH"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>至此，在使用pip安装python中的cx-Oracle就正常了</p>
+</li>
+</ol>
+<p><strong> 在oracle的文件下载页面也有相关设置的说明 </strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.codeme.site/2017/05/17/docker中安装cx-Oracle/" data-id="cj3dwx0ys0002qb9j8rx4vjhx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-etcd配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/04/etcd配置/" class="article-date">
+  <time datetime="2017-05-04T03:04:09.000Z" itemprop="datePublished">2017-05-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/04/etcd配置/">etcd配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>下载和解压etcd的相关文件，略过</p>
+<p>不输的文件夹是 /var/lib/etcd，其中 etcd 和 etcdctl 需要在 /usr/bin/ 下创建相关软连接，以便后续的service文件使用，也可以修改service文件</p>
+<p>启动 etcd 服务的命令是 sudo systemctl start etcd<br>启动后检查，curl <a href="http://127.0.0.1:2379/v2/members" target="_blank" rel="external">http://127.0.0.1:2379/v2/members</a> 或者使用其他工具请求这个链接，IP地址为部署的任意机器的IP<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"members"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="attr">"id"</span>: <span class="string">"5b123c0b90e015"</span>,</div><div class="line">      <span class="attr">"name"</span>: <span class="string">"etcd01"</span>,</div><div class="line">      <span class="attr">"peerURLs"</span>: [</div><div class="line">        <span class="string">"http://192.168.56.101:2380"</span></div><div class="line">      ],</div><div class="line">      <span class="attr">"clientURLs"</span>: [</div><div class="line">        <span class="string">"http://192.168.56.101:2379"</span></div><div class="line">      ]</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="attr">"id"</span>: <span class="string">"b082d7cebafd0896"</span>,</div><div class="line">      <span class="attr">"name"</span>: <span class="string">"etcd02"</span>,</div><div class="line">      <span class="attr">"peerURLs"</span>: [</div><div class="line">        <span class="string">"http://192.168.56.102:2380"</span></div><div class="line">      ],</div><div class="line">      <span class="attr">"clientURLs"</span>: [</div><div class="line">        <span class="string">"http://192.168.56.102:2379"</span></div><div class="line">      ]</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="attr">"id"</span>: <span class="string">"ea85a2410887d0cd"</span>,</div><div class="line">      <span class="attr">"name"</span>: <span class="string">"etcd03"</span>,</div><div class="line">      <span class="attr">"peerURLs"</span>: [</div><div class="line">        <span class="string">"http://192.168.56.103:2380"</span></div><div class="line">      ],</div><div class="line">      <span class="attr">"clientURLs"</span>: [</div><div class="line">        <span class="string">"http://192.168.56.103:2379"</span></div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>etcdctl 查看所有集群成员, 命令：etcdctl member list<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">5b123c0b90e015: name=etcd01 peerURLs=http://192.168.56.101:2380 clientURLs=http://192.168.56.101:2379 isLeader=<span class="literal">true</span></div><div class="line">b082d7cebafd0896: name=etcd02 peerURLs=http://192.168.56.102:2380 clientURLs=http://192.168.56.102:2379 isLeader=<span class="literal">false</span></div><div class="line">ea85a2410887d0cd: name=etcd03 peerURLs=http://192.168.56.103:2380 clientURLs=http://192.168.56.103:2379 isLeader=<span class="literal">false</span></div></pre></td></tr></table></figure></p>
+<hr>
+<p>etcd使用的配置文件内容，位置：/var/lib/etcd/etcd.conf<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># node-1</span></div><div class="line">ETCD_NAME=etcd01</div><div class="line">ETCD_DATA_DIR=<span class="string">"/var/lib/etcd/data"</span></div><div class="line">ETCD_LISTEN_PEER_URLS=<span class="string">"http://192.168.56.101:2380"</span></div><div class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">"http://192.168.56.101:2379,http://127.0.0.1:2379"</span></div><div class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">"http://192.168.56.101:2380"</span></div><div class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">"http://192.168.56.101:2379"</span></div><div class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">"new"</span></div><div class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">"etcd-cluster1"</span></div><div class="line">ETCD_INITIAL_CLUSTER=<span class="string">"etcd01=http://192.168.56.101:2380,etcd02=http://192.168.56.102:2380,etcd03=http://192.168.56.103:2380"</span></div><div class="line"></div><div class="line"><span class="comment"># node-2</span></div><div class="line">ETCD_NAME=etcd02</div><div class="line">ETCD_DATA_DIR=<span class="string">"/var/lib/etcd/data"</span></div><div class="line">ETCD_LISTEN_PEER_URLS=<span class="string">"http://192.168.56.102:2380"</span></div><div class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">"http://192.168.56.102:2379,http://127.0.0.1:2379"</span></div><div class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">"http://192.168.56.102:2380"</span></div><div class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">"http://192.168.56.102:2379"</span></div><div class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">"new"</span></div><div class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">"etcd-cluster1"</span></div><div class="line">ETCD_INITIAL_CLUSTER=<span class="string">"etcd01=http://192.168.56.101:2380,etcd02=http://192.168.56.102:2380,etcd03=http://192.168.56.103:2380"</span></div><div class="line"></div><div class="line"><span class="comment"># node-3</span></div><div class="line">ETCD_NAME=etcd03</div><div class="line">ETCD_DATA_DIR=<span class="string">"/var/lib/etcd/data"</span></div><div class="line">ETCD_LISTEN_PEER_URLS=<span class="string">"http://192.168.56.103:2380"</span></div><div class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">"http://192.168.56.103:2379,http://127.0.0.1:2379"</span></div><div class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">"http://192.168.56.103:2380"</span></div><div class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">"http://192.168.56.103:2379"</span></div><div class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">"new"</span></div><div class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">"etcd-cluster1"</span></div><div class="line">ETCD_INITIAL_CLUSTER=<span class="string">"etcd01=http://192.168.56.101:2380,etcd02=http://192.168.56.102:2380,etcd03=http://192.168.56.103:2380"</span></div></pre></td></tr></table></figure></p>
+<p>首先贴一个etcd使用的service文件，使用systemctl启动使用的，文件位置(ubuntu 16.04) /lib/systemd/system/etcd.service<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=Etcd Server</div><div class="line">After=network.target</div><div class="line">After=network-online.target</div><div class="line">Wants=network-online.target</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=notify</div><div class="line">WorkingDirectory=/var/lib/etcd/</div><div class="line">EnvironmentFile=-/var/lib/etcd/etcd.conf</div><div class="line">User=life</div><div class="line"><span class="comment"># set GOMAXPROCS to number of processors</span></div><div class="line">ExecStart=/bin/bash -c <span class="string">"GOMAXPROCS=<span class="variable">$(nproc)</span> /usr/bin/etcd --name=\"<span class="variable">$&#123;ETCD_NAME&#125;</span>\" --data-dir=\"<span class="variable">$&#123;ETCD_DATA_DIR&#125;</span>\" --listen-client-urls=\"<span class="variable">$&#123;ETCD_LISTEN_CLIENT_URLS&#125;</span>\" --listen-peer-urls=\"<span class="variable">$&#123;ETCD_LISTEN_PEER_URLS&#125;</span>\" --advertise-client-urls=\"<span class="variable">$&#123;ETCD_ADVERTISE_CLIENT_URLS&#125;</span>\" --initial-cluster-token=\"<span class="variable">$&#123;ETCD_INITIAL_CLUSTER_TOKEN&#125;</span>\" --initial-cluster=\"<span class="variable">$&#123;ETCD_INITIAL_CLUSTER&#125;</span>\" --initial-cluster-state=\"<span class="variable">$&#123;ETCD_INITIAL_CLUSTER_STATE&#125;</span>\" "</span></div><div class="line">Restart=on-failure</div><div class="line">LimitNOFILE=65536</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.codeme.site/2017/05/04/etcd配置/" data-id="cj3dwx0yu0003qb9jjsswv5yn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-git使用问题记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/28/git使用问题记录/" class="article-date">
+  <time datetime="2017-04-28T03:00:01.000Z" itemprop="datePublished">2017-04-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/28/git使用问题记录/">git使用问题记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>git pull 失败 ,提示：fatal: refusing to merge unrelated histories<br> <em>本地使用git init命令初始化后，并关联了远程仓库，本地和远程均有commit，首次推送出现的问题</em><br> 解决方法： <strong>git pull origin master –allow-unrelated-histories</strong></p>
+</li>
+<li><p>本地仓库关联远程仓库<br> 命令：<strong>git remote add origin remote-url</strong></p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.codeme.site/2017/04/28/git使用问题记录/" data-id="cj3dwx0yv0004qb9j2qc2rhdv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-多表连接查询统计sql示例" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/27/多表连接查询统计sql示例/" class="article-date">
+  <time datetime="2017-04-27T00:49:44.000Z" itemprop="datePublished">2017-04-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/27/多表连接查询统计sql示例/">多表连接查询统计sql示例</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>背景：</strong> 一个电商类似的项目，这个是后台统计使用的sql，之前使用的sqlalchemy ，但是运行的时间太长，400条记录，运行时间在1分钟左右，使用sql后运行时间在3秒左右</p>
+<p>下面是示例的sql语句<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> </div><div class="line">table_1.id <span class="keyword">AS</span> table_1_id, </div><div class="line">table_1.item_id <span class="keyword">AS</span> table_1_item_id, </div><div class="line">table_1.sku_no <span class="keyword">AS</span> table_1_sku_no, </div><div class="line">table_1.sku_name <span class="keyword">AS</span> table_1_sku_name, </div><div class="line">table_1.MDM_code <span class="keyword">AS</span> table_1_MDM_code,</div><div class="line">table_1.created_at <span class="keyword">AS</span> table_1_created_at, </div><div class="line">table_1.created_by <span class="keyword">AS</span> table_1_created_by, </div><div class="line">table_2.id <span class="keyword">AS</span> item_id, </div><div class="line">table_2.name <span class="keyword">AS</span> item_name, </div><div class="line">table_2.item_no <span class="keyword">AS</span> item_item_no, </div><div class="line">table_2.item_type <span class="keyword">AS</span> item_item_type, </div><div class="line">table_2.price <span class="keyword">AS</span> item_price, </div><div class="line"><span class="keyword">count</span>(<span class="keyword">DISTINCT</span> table_3.id) <span class="keyword">AS</span> browse_times, <span class="comment">/*用 DISTINCT 去重，统计数量*/</span></div><div class="line"><span class="keyword">count</span>(<span class="keyword">DISTINCT</span> table_4.id) <span class="keyword">AS</span> like_times, </div><div class="line"><span class="keyword">count</span>(<span class="keyword">DISTINCT</span> table_5.id) <span class="keyword">AS</span> item_share_times, </div><div class="line"><span class="keyword">count</span>(<span class="keyword">DISTINCT</span> table_6.id) <span class="keyword">AS</span> add_cart_times, </div><div class="line"><span class="keyword">count</span>(<span class="keyword">DISTINCT</span> table_7.id) <span class="keyword">AS</span> table_7_times, </div><div class="line"><span class="keyword">count</span>(<span class="keyword">DISTINCT</span> table_8.id) <span class="keyword">AS</span> comment_times, </div><div class="line"><span class="keyword">count</span>(<span class="keyword">DISTINCT</span> table_9.id) <span class="keyword">AS</span> table_9_order_count,</div><div class="line"><span class="keyword">sum</span>(table_9.cnt)/(<span class="keyword">count</span>(table_9.order_id)/<span class="keyword">count</span>(<span class="keyword">distinct</span> table_9.order_id)) <span class="keyword">AS</span> table_9_sku_count,</div><div class="line"><span class="keyword">sum</span>(table_9.cnt * table_9.price)/(<span class="keyword">count</span>(table_9.order_id)/<span class="keyword">count</span>(<span class="keyword">distinct</span> table_9.order_id)) <span class="keyword">AS</span> table_9_total_price</div><div class="line"><span class="comment">/* sum算总和的时候除掉重复的次数，目前没有找到什么更好的办法来解决 */</span></div><div class="line"></div><div class="line"><span class="keyword">FROM</span> table_1 <span class="keyword">JOIN</span> table_2 <span class="keyword">ON</span> table_1.item_id = table_2.id</div><div class="line"></div><div class="line"><span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> table_3 <span class="keyword">ON</span> table_3.detail = table_1.item_id <span class="keyword">AND</span>  table_3.act_time <span class="keyword">BETWEEN</span> <span class="string">'1487981301.0'</span> <span class="keyword">AND</span> <span class="string">'1493165301.0'</span> </div><div class="line"><span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> table_4 <span class="keyword">ON</span> table_4.detail = table_1.item_id <span class="keyword">AND</span>  table_4.act_time <span class="keyword">BETWEEN</span> <span class="string">'1487981301.0'</span> <span class="keyword">AND</span> <span class="string">'1493165301.0'</span> </div><div class="line"><span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> table_5 <span class="keyword">ON</span> table_5.detail = table_1.item_id <span class="keyword">AND</span>  table_5.act_time <span class="keyword">BETWEEN</span> <span class="string">'1487981301.0'</span> <span class="keyword">AND</span> <span class="string">'1493165301.0'</span> </div><div class="line"><span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> table_6 <span class="keyword">ON</span> table_6.detail = table_1.item_id <span class="keyword">AND</span>  table_6.act_time <span class="keyword">BETWEEN</span> <span class="string">'1487981301.0'</span> <span class="keyword">AND</span> <span class="string">'1493165301.0'</span> </div><div class="line"><span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> table_8 <span class="keyword">ON</span> table_8.item_id = table_1.item_id <span class="keyword">AND</span>  table_8.created_at <span class="keyword">BETWEEN</span> <span class="string">'2017-02-25 08:08:21'</span> <span class="keyword">AND</span> <span class="string">'2017-04-26 08:08:21'</span> </div><div class="line"><span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> table_7 <span class="keyword">ON</span> table_7.sku_id = table_1.id <span class="keyword">AND</span>  table_7.created_at <span class="keyword">BETWEEN</span> <span class="string">'2017-02-25 08:08:21'</span> <span class="keyword">AND</span> <span class="string">'2017-04-26 08:08:21'</span> </div><div class="line"><span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> table_9 <span class="keyword">ON</span> table_9.sku_id = table_1.id <span class="keyword">AND</span> table_9.order_id <span class="keyword">in</span> </div><div class="line">    (<span class="keyword">select</span> table_10.id <span class="keyword">from</span> table_10 <span class="keyword">WHERE</span> table_10.created_at <span class="keyword">BETWEEN</span> <span class="string">'2017-02-25 08:08:21'</span> <span class="keyword">AND</span> <span class="string">'2017-04-26 08:08:21'</span>)</div><div class="line"></div><div class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> table_1.id;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.codeme.site/2017/04/27/多表连接查询统计sql示例/" data-id="cj3dwx0z10006qb9ji16cwqyp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Hexo搭建博客" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/06/Hexo搭建博客/" class="article-date">
+  <time datetime="2017-01-06T13:48:17.000Z" itemprop="datePublished">2017-01-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/06/Hexo搭建博客/">Hexo搭建博客</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Hexo-搭建个人博客"><a href="#Hexo-搭建个人博客" class="headerlink" title="Hexo 搭建个人博客"></a>Hexo 搭建个人博客</h2><hr>
+<p>Hexo是基于nodejs的工具，需要先安装nodejs</p>
+<ol>
+<li>windows下自己接下载nodejs的安装包，安装即可。</li>
+<li>nodejs自带npm工具。</li>
+<li><p>使用npm安装Hexo。</p>
+<figure class="highlight sh"><figcaption><span>install-hexo</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo-cli</div></pre></td></tr></table></figure>
+</li>
+<li><p>初始化博客的目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo init [directory]</div></pre></td></tr></table></figure>
+</li>
+<li><p>添加文章</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new name</div></pre></td></tr></table></figure>
+</li>
+<li><p>部署</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo deploy --generate</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>写在最后的问题：</p>
+<ul>
+<li>绑定域名，使用的是二级域名<ol>
+<li>购买域名，略过</li>
+<li>添加 CNAME 文件到github的项目，内容写自己的域名即可</li>
+<li>在域名解析中添加一条cmane的记录，指向 <strong>[name].github.io</strong>, name替换为自己的名字，即可</li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.codeme.site/2017/01/06/Hexo搭建博客/" data-id="cj3dwx0yp0001qb9jly0nzmh7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/01/python-使用-logging/">python 使用 logging</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/19/Dockerfile-demo/">Dockerfile demo</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/17/docker中安装cx-Oracle/">docker中安装cx-Oracle</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/etcd配置/">etcd配置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Horbie Huo<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

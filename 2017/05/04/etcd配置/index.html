@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>etcd配置 | Horbie Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="下载和解压etcd的相关文件，略过 不输的文件夹是 /var/lib/etcd，其中 etcd 和 etcdctl 需要在 /usr/bin/ 下创建相关软连接，以便后续的service文件使用，也可以修改service文件 启动 etcd 服务的命令是 sudo systemctl start etcd启动后检查，curl http://127.0.0.1:2379/v2/members 或者使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="etcd配置">
+<meta property="og:url" content="http://blog.codeme.site/2017/05/04/etcd配置/index.html">
+<meta property="og:site_name" content="Horbie Blog">
+<meta property="og:description" content="下载和解压etcd的相关文件，略过 不输的文件夹是 /var/lib/etcd，其中 etcd 和 etcdctl 需要在 /usr/bin/ 下创建相关软连接，以便后续的service文件使用，也可以修改service文件 启动 etcd 服务的命令是 sudo systemctl start etcd启动后检查，curl http://127.0.0.1:2379/v2/members 或者使">
+<meta property="og:updated_time" content="2017-05-25T01:24:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="etcd配置">
+<meta name="twitter:description" content="下载和解压etcd的相关文件，略过 不输的文件夹是 /var/lib/etcd，其中 etcd 和 etcdctl 需要在 /usr/bin/ 下创建相关软连接，以便后续的service文件使用，也可以修改service文件 启动 etcd 服务的命令是 sudo systemctl start etcd启动后检查，curl http://127.0.0.1:2379/v2/members 或者使">
+  
+    <link rel="alternate" href="/atom.xml" title="Horbie Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-98266527-2', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+<!-- Baidu Analytics -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+//   hm.src = "https://hm.baidu.com/hm.js?fc91010a1638e0d0f279c5253ffd0ae1";
+  hm.src = "https://hm.baidu.com/hm.js?" + 'c2aeb8f595a477a6bbd654908aefd7bb';
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<!-- End Baidu Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Horbie Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Record Mind</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.codeme.site"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-etcd配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/04/etcd配置/" class="article-date">
+  <time datetime="2017-05-04T03:04:09.000Z" itemprop="datePublished">2017-05-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      etcd配置
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>下载和解压etcd的相关文件，略过</p>
+<p>不输的文件夹是 /var/lib/etcd，其中 etcd 和 etcdctl 需要在 /usr/bin/ 下创建相关软连接，以便后续的service文件使用，也可以修改service文件</p>
+<p>启动 etcd 服务的命令是 sudo systemctl start etcd<br>启动后检查，curl <a href="http://127.0.0.1:2379/v2/members" target="_blank" rel="external">http://127.0.0.1:2379/v2/members</a> 或者使用其他工具请求这个链接，IP地址为部署的任意机器的IP<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"members"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="attr">"id"</span>: <span class="string">"5b123c0b90e015"</span>,</div><div class="line">      <span class="attr">"name"</span>: <span class="string">"etcd01"</span>,</div><div class="line">      <span class="attr">"peerURLs"</span>: [</div><div class="line">        <span class="string">"http://192.168.56.101:2380"</span></div><div class="line">      ],</div><div class="line">      <span class="attr">"clientURLs"</span>: [</div><div class="line">        <span class="string">"http://192.168.56.101:2379"</span></div><div class="line">      ]</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="attr">"id"</span>: <span class="string">"b082d7cebafd0896"</span>,</div><div class="line">      <span class="attr">"name"</span>: <span class="string">"etcd02"</span>,</div><div class="line">      <span class="attr">"peerURLs"</span>: [</div><div class="line">        <span class="string">"http://192.168.56.102:2380"</span></div><div class="line">      ],</div><div class="line">      <span class="attr">"clientURLs"</span>: [</div><div class="line">        <span class="string">"http://192.168.56.102:2379"</span></div><div class="line">      ]</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="attr">"id"</span>: <span class="string">"ea85a2410887d0cd"</span>,</div><div class="line">      <span class="attr">"name"</span>: <span class="string">"etcd03"</span>,</div><div class="line">      <span class="attr">"peerURLs"</span>: [</div><div class="line">        <span class="string">"http://192.168.56.103:2380"</span></div><div class="line">      ],</div><div class="line">      <span class="attr">"clientURLs"</span>: [</div><div class="line">        <span class="string">"http://192.168.56.103:2379"</span></div><div class="line">      ]</div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>etcdctl 查看所有集群成员, 命令：etcdctl member list<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">5b123c0b90e015: name=etcd01 peerURLs=http://192.168.56.101:2380 clientURLs=http://192.168.56.101:2379 isLeader=<span class="literal">true</span></div><div class="line">b082d7cebafd0896: name=etcd02 peerURLs=http://192.168.56.102:2380 clientURLs=http://192.168.56.102:2379 isLeader=<span class="literal">false</span></div><div class="line">ea85a2410887d0cd: name=etcd03 peerURLs=http://192.168.56.103:2380 clientURLs=http://192.168.56.103:2379 isLeader=<span class="literal">false</span></div></pre></td></tr></table></figure></p>
+<hr>
+<p>etcd使用的配置文件内容，位置：/var/lib/etcd/etcd.conf<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># node-1</span></div><div class="line">ETCD_NAME=etcd01</div><div class="line">ETCD_DATA_DIR=<span class="string">"/var/lib/etcd/data"</span></div><div class="line">ETCD_LISTEN_PEER_URLS=<span class="string">"http://192.168.56.101:2380"</span></div><div class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">"http://192.168.56.101:2379,http://127.0.0.1:2379"</span></div><div class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">"http://192.168.56.101:2380"</span></div><div class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">"http://192.168.56.101:2379"</span></div><div class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">"new"</span></div><div class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">"etcd-cluster1"</span></div><div class="line">ETCD_INITIAL_CLUSTER=<span class="string">"etcd01=http://192.168.56.101:2380,etcd02=http://192.168.56.102:2380,etcd03=http://192.168.56.103:2380"</span></div><div class="line"></div><div class="line"><span class="comment"># node-2</span></div><div class="line">ETCD_NAME=etcd02</div><div class="line">ETCD_DATA_DIR=<span class="string">"/var/lib/etcd/data"</span></div><div class="line">ETCD_LISTEN_PEER_URLS=<span class="string">"http://192.168.56.102:2380"</span></div><div class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">"http://192.168.56.102:2379,http://127.0.0.1:2379"</span></div><div class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">"http://192.168.56.102:2380"</span></div><div class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">"http://192.168.56.102:2379"</span></div><div class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">"new"</span></div><div class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">"etcd-cluster1"</span></div><div class="line">ETCD_INITIAL_CLUSTER=<span class="string">"etcd01=http://192.168.56.101:2380,etcd02=http://192.168.56.102:2380,etcd03=http://192.168.56.103:2380"</span></div><div class="line"></div><div class="line"><span class="comment"># node-3</span></div><div class="line">ETCD_NAME=etcd03</div><div class="line">ETCD_DATA_DIR=<span class="string">"/var/lib/etcd/data"</span></div><div class="line">ETCD_LISTEN_PEER_URLS=<span class="string">"http://192.168.56.103:2380"</span></div><div class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">"http://192.168.56.103:2379,http://127.0.0.1:2379"</span></div><div class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">"http://192.168.56.103:2380"</span></div><div class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">"http://192.168.56.103:2379"</span></div><div class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">"new"</span></div><div class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">"etcd-cluster1"</span></div><div class="line">ETCD_INITIAL_CLUSTER=<span class="string">"etcd01=http://192.168.56.101:2380,etcd02=http://192.168.56.102:2380,etcd03=http://192.168.56.103:2380"</span></div></pre></td></tr></table></figure></p>
+<p>首先贴一个etcd使用的service文件，使用systemctl启动使用的，文件位置(ubuntu 16.04) /lib/systemd/system/etcd.service<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=Etcd Server</div><div class="line">After=network.target</div><div class="line">After=network-online.target</div><div class="line">Wants=network-online.target</div><div class="line"></div><div class="line">[Service]</div><div class="line">Type=notify</div><div class="line">WorkingDirectory=/var/lib/etcd/</div><div class="line">EnvironmentFile=-/var/lib/etcd/etcd.conf</div><div class="line">User=life</div><div class="line"><span class="comment"># set GOMAXPROCS to number of processors</span></div><div class="line">ExecStart=/bin/bash -c <span class="string">"GOMAXPROCS=<span class="variable">$(nproc)</span> /usr/bin/etcd --name=\"<span class="variable">$&#123;ETCD_NAME&#125;</span>\" --data-dir=\"<span class="variable">$&#123;ETCD_DATA_DIR&#125;</span>\" --listen-client-urls=\"<span class="variable">$&#123;ETCD_LISTEN_CLIENT_URLS&#125;</span>\" --listen-peer-urls=\"<span class="variable">$&#123;ETCD_LISTEN_PEER_URLS&#125;</span>\" --advertise-client-urls=\"<span class="variable">$&#123;ETCD_ADVERTISE_CLIENT_URLS&#125;</span>\" --initial-cluster-token=\"<span class="variable">$&#123;ETCD_INITIAL_CLUSTER_TOKEN&#125;</span>\" --initial-cluster=\"<span class="variable">$&#123;ETCD_INITIAL_CLUSTER&#125;</span>\" --initial-cluster-state=\"<span class="variable">$&#123;ETCD_INITIAL_CLUSTER_STATE&#125;</span>\" "</span></div><div class="line">Restart=on-failure</div><div class="line">LimitNOFILE=65536</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.codeme.site/2017/05/04/etcd配置/" data-id="cj3dwx0yu0003qb9jjsswv5yn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/17/docker中安装cx-Oracle/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          docker中安装cx-Oracle
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/28/git使用问题记录/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">git使用问题记录</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/01/python-使用-logging/">python 使用 logging</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/19/Dockerfile-demo/">Dockerfile demo</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/17/docker中安装cx-Oracle/">docker中安装cx-Oracle</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/etcd配置/">etcd配置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Horbie Huo<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
