@@ -81,9 +81,9 @@ var _hmt = _hmt || [];
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.codeme.site"></form>
@@ -93,6 +93,103 @@ var _hmt = _hmt || [];
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-fluentd-elasticsearch-kibana-收集日志" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/07/fluentd-elasticsearch-kibana-收集日志/" class="article-date">
+  <time datetime="2017-06-07T08:41:54.000Z" itemprop="datePublished">2017-06-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/07/fluentd-elasticsearch-kibana-收集日志/">fluentd+elasticsearch+kibana 收集日志</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>部署的机器是ubuntu 14.04 内存 2G</p>
+<ol>
+<li><p>首先是 elasticsearch 安装</p>
+<ul>
+<li>elasticsearch版本是5.4.1，<a href="https://www.elastic.co/downloads/elasticsearch" target="_blank" rel="external">官网地址</a></li>
+<li>需要安装java环境，新版 5.4.1 需要的是jdk1.8，安装步骤如下(ubuntu 14.04)：<ul>
+<li>sudo add-apt-repository ppa:openjdk-r/ppa</li>
+<li>sudo apt-get update</li>
+<li>sudo apt-get install openjdk-8-jdk</li>
+<li>如果有多个java版本，可能需要切换<ul>
+<li>sudo update-alternatives –config java #查看并选择java的版本</li>
+<li>sudo update-alternatives –config javac #配置javac的版本</li>
+</ul>
+</li>
+<li>java -version #查看java版本</li>
+</ul>
+</li>
+<li>解压文件，并放置在特定的目录，<strong>建议创建一个system用户，用来管理和启动相关的程序，后面kibana也要用到</strong></li>
+<li><p>使用supervisor启动elasticsearch</p>
+<ul>
+<li><p>配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[program:elasticsearch]</div><div class="line">command=/var/log_collecter/elasticsearch-5.4.1/bin/elasticsearch -s -E path.data=/data/es -E indices.fielddata.cache.size=1gb</div><div class="line">directory=/var/log_collecter/elasticsearch-5.4.1</div><div class="line">environment=ES_JAVA_OPTS=&quot;-Xms1g -Xmx1536m&quot;</div><div class="line">numprocs=1</div><div class="line">user=log_collecter</div><div class="line">autostart=true</div><div class="line">autorestart=true</div><div class="line">redirect_stderr=true</div><div class="line">stdout_logfile=/var/log/supervisor/%(program_name)s.log</div><div class="line">stdout_logfile_maxbytes=100MB</div><div class="line">stdout_logfile_backups=10</div></pre></td></tr></table></figure>
+</li>
+<li><p>其中 ES_JAVA_OPTS 的配置主要是机器的内存小才用到的，两个参数均是jvm使用的参数， -Xms配置jvm最小堆内存，-Xmx配置jvm最大堆内存，<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html" target="_blank" rel="external">详细解释参考elasticsearch文档</a></p>
+</li>
+<li><strong>sudo ln -s /var/log_collecter/elasticsearch-5.4.1/supervisor_es.conf /etc/supervisor/conf.d/, 创建配置文件软连接到 /etc/supervisor/conf.d</strong></li>
+<li>sudo supervisorctl update, 更新启动程序</li>
+</ul>
+</li>
+<li>以上elasticsearch和java的安装只是参考，安装的方法有很多种，只要能保证elasticsearch正常运行即可，curl <a href="http://127.0.0.1:9200" target="_blank" rel="external">http://127.0.0.1:9200</a> 能正常访问即可</li>
+</ul>
+</li>
+<li><p>fluentd 安装</p>
+<ul>
+<li><p>安装前需要可能需要配置一下系统，<a href="http://docs.fluentd.org/v0.12/articles/before-install" target="_blank" rel="external">官方安装前说明</a></p>
+<ul>
+<li><p>文件描述符限制，ulimit -n 可以查看，最好大于 65536，如果是 1024等较小的数字，修改方法是编辑 /etc/security/limits.conf ，添加下面的配置，重启机器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">root soft nofile 65536</div><div class="line">root hard nofile 65536</div><div class="line">* soft nofile 65536</div><div class="line">* hard nofile 65536</div></pre></td></tr></table></figure>
+</li>
+<li><p>网络相关的内核参数的修改，本次没有修改，有需要，请参考<a href="http://docs.fluentd.org/v0.12/articles/before-install" target="_blank" rel="external">官方安装前说明</a></p>
+</li>
+</ul>
+</li>
+<li>使用官网提供的命令安装(Trusty 版本)，curl -L <a href="https://toolbelt.treasuredata.com/sh/install-ubuntu-trusty-td-agent2.sh" target="_blank" rel="external">https://toolbelt.treasuredata.com/sh/install-ubuntu-trusty-td-agent2.sh</a> | sh</li>
+<li><strong>查看ubuntu版本命令 lsb_release -a, 详细的安装过程请参考<a href="http://docs.fluentd.org/v0.12/articles/install-by-deb" target="_blank" rel="external">官网ubuntu安装指导</a>，本次安装没有踩坑，所以此处较为省略</strong></li>
+</ul>
+</li>
+<li><p>kibana 安装</p>
+<ul>
+<li>下载kibana-5.4.1，注意版本，一定要和之前elasticsearch兼容，<a href="https://www.elastic.co/downloads/kibana" target="_blank" rel="external">下载网页</a></li>
+<li>解压文件，并放置在特定的目录，<strong>建议创建一个system用户，用来管理和启动相关的程序</strong></li>
+<li><p>使用supervisor启动 kibana</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[program:kibana]</div><div class="line">command=/var/log_collecter/kibana-5.4.1/bin/kibana -e http://127.0.0.1:9200 -q</div><div class="line">directory=/var/log_collecter/kibana-5.4.1</div><div class="line">numprocs=1</div><div class="line">user=log_collecter</div><div class="line">autostart=true</div><div class="line">autorestart=true</div><div class="line">redirect_stderr=true</div><div class="line">stdout_logfile=/var/log/supervisor/%(program_name)s.log</div><div class="line">stdout_logfile_maxbytes=100MB</div><div class="line">stdout_logfile_backups=10</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>sudo ln -s /var/log_collecter/kibana-5.4.1/supervisor_kibana.conf /etc/supervisor/conf.d/, 创建配置文件软连接到 /etc/supervisor/conf.d</strong></p>
+</li>
+<li>sudo supervisorctl update, 更新启动程序</li>
+<li>同样这里使用supervisor等方式也只是一种启动的方式，像 systemctl 等方式也可以实现相同的作用</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.codeme.site/2017/06/07/fluentd-elasticsearch-kibana-收集日志/" data-id="cj3mrajdo0005py9j258nq7eg" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-python-使用-logging" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -123,7 +220,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/06/01/python-使用-logging/" data-id="cj3dwx0z50007qb9js982y983" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/06/01/python-使用-logging/" data-id="cj3mrajdx0007py9jvjouuvhw" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -168,7 +265,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/05/25/hello-world/" data-id="cj3dwx0yx0005qb9jbtxz96l4" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/05/25/hello-world/" data-id="cj3mrajds0006py9j1loyr9f3" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -205,7 +302,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/05/19/Dockerfile-demo/" data-id="cj3dwx0yg0000qb9je81mhnom" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/05/19/Dockerfile-demo/" data-id="cj3mrajcx0000py9j6bsa5z2d" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -257,7 +354,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/05/17/docker中安装cx-Oracle/" data-id="cj3dwx0ys0002qb9j8rx4vjhx" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/05/17/docker中安装cx-Oracle/" data-id="cj3mrajde0002py9jsim8v4hs" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -300,7 +397,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/05/04/etcd配置/" data-id="cj3dwx0yu0003qb9jjsswv5yn" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/05/04/etcd配置/" data-id="cj3mrajdk0004py9j66daacdb" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -342,7 +439,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/04/28/git使用问题记录/" data-id="cj3dwx0yv0004qb9j2qc2rhdv" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/04/28/git使用问题记录/" data-id="cj3mrajdi0003py9j7t6bwl74" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -380,7 +477,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/04/27/多表连接查询统计sql示例/" data-id="cj3dwx0z10006qb9ji16cwqyp" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/04/27/多表连接查询统计sql示例/" data-id="cj3mraje50008py9jq8f9xr9i" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -443,7 +540,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/01/06/Hexo搭建博客/" data-id="cj3dwx0yp0001qb9jly0nzmh7" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/01/06/Hexo搭建博客/" data-id="cj3mrajd70001py9jwdr48zg7" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -478,9 +575,13 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/06/07/fluentd-elasticsearch-kibana-收集日志/">fluentd+elasticsearch+kibana 收集日志</a>
+          </li>
         
           <li>
             <a href="/2017/06/01/python-使用-logging/">python 使用 logging</a>
@@ -498,10 +599,6 @@ var _hmt = _hmt || [];
             <a href="/2017/05/17/docker中安装cx-Oracle/">docker中安装cx-Oracle</a>
           </li>
         
-          <li>
-            <a href="/2017/05/04/etcd配置/">etcd配置</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -515,7 +612,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Horbie Huo<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
