@@ -7,8 +7,8 @@ title: Horbie Blog
 subtitle: Record Mind
 description:
 author: Horbie Huo
-language: 
-timezone:
+language: zh-CN
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -28,6 +28,7 @@ code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
   - README.md
+  - favicon.png
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -66,7 +67,7 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 # theme: indigo
-theme: landscape
+theme: maupassant
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
