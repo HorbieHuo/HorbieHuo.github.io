@@ -81,9 +81,9 @@ var _hmt = _hmt || [];
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.codeme.site"></form>
@@ -183,7 +183,7 @@ var _hmt = _hmt || [];
 <li><p>flask 相关的配置</p>
 <ul>
 <li>安装 fluentd 的第三方包 fluent</li>
-<li>配置相关的log<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> fluent.handler</div><div class="line"></div><div class="line"><span class="comment">#class FilterObject(logging.Filter):</span></div><div class="line"><span class="comment">#    def __init__(self, filterFunc):</span></div><div class="line"><span class="comment">#        self.filterFunc = filterFunc</span></div><div class="line"></div><div class="line"><span class="comment">#    def filter(self, record):</span></div><div class="line"><span class="comment">#        return self.filterFunc(record)</span></div><div class="line"></div><div class="line">fluentHandler = fluent.handler.FluentHandler(</div><div class="line">    tag_name,</div><div class="line">    host=self.fluent_host,</div><div class="line">    port=self.fluent_port</div><div class="line">)</div><div class="line">fluent_format = &#123;</div><div class="line">    <span class="string">'host'</span>: <span class="string">'%(hostname)s'</span>,</div><div class="line">    <span class="string">'where'</span>: <span class="string">'%(filename)s.%(lineno)d'</span>,  <span class="comment">#具体到文件、函数</span></div><div class="line">    <span class="string">'type'</span>: <span class="string">'%(levelname)s'</span>,</div><div class="line">    <span class="string">'func'</span>: <span class="string">'%(funcName)s'</span>,</div><div class="line">    <span class="string">'stack_trace'</span>: <span class="string">'%(exc_text)s'</span>,</div><div class="line">    <span class="string">'real_log_name'</span>:<span class="string">'%(name)s'</span>,</div><div class="line">    <span class="string">'process_id'</span>:<span class="string">'%(process)d'</span>,</div><div class="line">&#125;</div><div class="line">fluentHandler.setFormatter(fluent.handler.FluentRecordFormatter(fluent_format))</div><div class="line"><span class="comment">#fluentHandler.addFilter(FilterObject(</span></div><div class="line"><span class="comment">#    lambda x: self.fluent_host and self.fluent_port</span></div><div class="line"><span class="comment">#))</span></div><div class="line">logger.addHandler(fluentHandler)</div><div class="line">logger.propagate = <span class="keyword">False</span></div></pre></td></tr></table></figure>
+<li>配置相关的log<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> fluent.handler</div><div class="line"></div><div class="line"><span class="comment">#class FilterObject(logging.Filter):</span></div><div class="line"><span class="comment">#    def __init__(self, filterFunc):</span></div><div class="line"><span class="comment">#        self.filterFunc = filterFunc</span></div><div class="line"></div><div class="line"><span class="comment">#    def filter(self, record):</span></div><div class="line"><span class="comment">#        return self.filterFunc(record)</span></div><div class="line"></div><div class="line">logger = logging.getLogger(<span class="string">"log_prefix"</span>)</div><div class="line">fluentHandler = fluent.handler.FluentHandler(</div><div class="line">    <span class="string">"log_prefix"</span>,</div><div class="line">    host=self.fluent_host,</div><div class="line">    port=self.fluent_port</div><div class="line">)</div><div class="line">fluent_format = &#123;</div><div class="line">    <span class="string">'host'</span>: <span class="string">'%(hostname)s'</span>,</div><div class="line">    <span class="string">'where'</span>: <span class="string">'%(filename)s.%(lineno)d'</span>,  <span class="comment">#具体到文件、函数</span></div><div class="line">    <span class="string">'type'</span>: <span class="string">'%(levelname)s'</span>,</div><div class="line">    <span class="string">'func'</span>: <span class="string">'%(funcName)s'</span>,</div><div class="line">    <span class="string">'stack_trace'</span>: <span class="string">'%(exc_text)s'</span>,</div><div class="line">    <span class="string">'real_log_name'</span>:<span class="string">'%(name)s'</span>,</div><div class="line">    <span class="string">'process_id'</span>:<span class="string">'%(process)d'</span>,</div><div class="line">&#125;</div><div class="line">fluentHandler.setFormatter(fluent.handler.FluentRecordFormatter(fluent_format))</div><div class="line"><span class="comment">#fluentHandler.addFilter(FilterObject(</span></div><div class="line"><span class="comment">#    lambda x: self.fluent_host and self.fluent_port</span></div><div class="line"><span class="comment">#))</span></div><div class="line">logger.addHandler(fluentHandler)</div><div class="line">logger.propagate = <span class="keyword">False</span></div></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -194,7 +194,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/06/07/fluentd-elasticsearch-kibana-收集日志/" data-id="cj3mrajdo0005py9j258nq7eg" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/06/07/fluentd-elasticsearch-kibana-收集日志/" data-id="cj3mrajdo0005py9j258nq7eg" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -233,7 +233,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/06/01/python-使用-logging/" data-id="cj3mrajdx0007py9jvjouuvhw" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/06/01/python-使用-logging/" data-id="cj3mrajdx0007py9jvjouuvhw" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -278,7 +278,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/05/25/hello-world/" data-id="cj3mrajds0006py9j1loyr9f3" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/05/25/hello-world/" data-id="cj3mrajds0006py9j1loyr9f3" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -315,7 +315,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/05/19/Dockerfile-demo/" data-id="cj3mrajcx0000py9j6bsa5z2d" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/05/19/Dockerfile-demo/" data-id="cj3mrajcx0000py9j6bsa5z2d" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -367,7 +367,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/05/17/docker中安装cx-Oracle/" data-id="cj3mrajde0002py9jsim8v4hs" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/05/17/docker中安装cx-Oracle/" data-id="cj3mrajde0002py9jsim8v4hs" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -410,7 +410,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/05/04/etcd配置/" data-id="cj3mrajdk0004py9j66daacdb" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/05/04/etcd配置/" data-id="cj3mrajdk0004py9j66daacdb" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -452,7 +452,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/04/28/git使用问题记录/" data-id="cj3mrajdi0003py9j7t6bwl74" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/04/28/git使用问题记录/" data-id="cj3mrajdi0003py9j7t6bwl74" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -490,7 +490,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/04/27/多表连接查询统计sql示例/" data-id="cj3mraje50008py9jq8f9xr9i" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/04/27/多表连接查询统计sql示例/" data-id="cj3mraje50008py9jq8f9xr9i" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -553,7 +553,7 @@ var _hmt = _hmt || [];
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.codeme.site/2017/01/06/Hexo搭建博客/" data-id="cj3mrajd70001py9jwdr48zg7" class="article-share-link">Share</a>
+      <a data-url="http://blog.codeme.site/2017/01/06/Hexo搭建博客/" data-id="cj3mrajd70001py9jwdr48zg7" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -588,7 +588,7 @@ var _hmt = _hmt || [];
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -625,7 +625,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Horbie Huo<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
