@@ -1,5 +1,5 @@
 ---
-title: fluentd+elasticsearch+kibana 收集日志
+title: fluentd+elasticsearch+kibana 收集 flask 日志
 date: 2017-06-07 16:41:54
 tags:
 ---
@@ -72,5 +72,62 @@ tags:
   * sudo supervisorctl update, 更新启动程序
   * 同样这里使用supervisor等方式也只是一种启动的方式，像 systemctl 等方式也可以实现相同的作用
 
+  至此，日志收集的工具都已经安装齐全。
 
+4. 修改 fluentd 的配置文件，只收集指定的日志, 建议只绑定到特定的内部地址，不要使用默认的端口号，注释掉原来默认的 @type forward 配置
+```
+<source>
+    @type forward
+    bind 10.10.10.10
+    port 10000
+</source>
+<match lifemg.**>
+    type elasticsearch
+    host 127.0.0.1
+    port 9200
+    include_tag_key true
+    tag_key @log_name
+    logstash_format true
+    flush_interval 10s
+</match>
+```
+
+5. flask 相关的配置
+  * 安装 fluentd 的第三方包 fluent
+  * 配置相关的log
+  ```python
+    import logging
+    import fluent.handler
+
+    #class FilterObject(logging.Filter):
+    #    def __init__(self, filterFunc):
+    #        self.filterFunc = filterFunc
+
+    #    def filter(self, record):
+    #        return self.filterFunc(record)
+
+    logger = logging.getLogger("log_prefix")
+    fluentHandler = fluent.handler.FluentHandler(
+        "log_prefix",
+        host=self.fluent_host,
+        port=self.fluent_port
+    )
+    fluent_format = {
+        'host': '%(hostname)s',
+        'where': '%(filename)s.%(lineno)d',  #具体到文件、函数
+        'type': '%(levelname)s',
+        'func': '%(funcName)s',
+        'stack_trace': '%(exc_text)s',
+        'real_log_name':'%(name)s',
+        'process_id':'%(process)d',
+    }
+    fluentHandler.setFormatter(fluent.handler.FluentRecordFormatter(fluent_format))
+    #fluentHandler.addFilter(FilterObject(
+    #    lambda x: self.fluent_host and self.fluent_port
+    #))
+    logger.addHandler(fluentHandler)
+    logger.propagate = False
+  ```
+
+6. 启动flask程序，打开kibana地址，就可以看到收集到的log
 
