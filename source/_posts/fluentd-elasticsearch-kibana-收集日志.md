@@ -131,3 +131,5 @@ tags:
 
 6. 启动flask程序，打开kibana地址，就可以看到收集到的log
 
+最后，贴上一张 kibana 界面的图片
+![kibana](http://oh14x29vm.bkt.clouddn.com/kibana.png "kibana")
