@@ -45,7 +45,12 @@ searchFunc(path, 'local-search-input', 'local-search-result');
 </script><script>var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?c2aeb8f595a477a6bbd654908aefd7bb";
+  var host_domain = window.location.host;
+  if (host_domain == "b.codeme.site") {
+    hm.src = "//hm.baidu.com/hm.js?836c271507e94fe8a1ac6f9c1b2b1bde";
+  } else {
+    hm.src = "//hm.baidu.com/hm.js?c2aeb8f595a477a6bbd654908aefd7bb";
+  }
   var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
   })();
