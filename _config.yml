@@ -73,6 +73,8 @@ theme: maupassant
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:HorbieHuo/HorbieHuo.github.io.git
+  repo: 
+    github: git@github.com:HorbieHuo/HorbieHuo.github.io.git
+    coding: git@git.coding.net:horbie_huo/HorbieHuo.git
   branch: master
   message: Site updated at {{ now("YYYY-MM-DD HH:mm:ss") }}
