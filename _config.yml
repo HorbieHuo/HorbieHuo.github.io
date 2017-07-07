@@ -29,6 +29,8 @@ i18n_dir: :lang
 skip_render:
   - README.md
   - favicon.png
+  - google9088e0b419ebbb97.html
+  - baidu_verify_qZxunTQNNf.html
 
 # Writing
 new_post_name: :title.md # File name of new posts
