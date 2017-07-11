@@ -30,6 +30,8 @@ skip_render:
   - README.md
   - favicon.png
   - robots.txt
+  - google9088e0b419ebbb97.html
+  - baidu_verify_qZxunTQNNf.html
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -74,6 +76,8 @@ theme: maupassant
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:HorbieHuo/HorbieHuo.github.io.git
+  repo: 
+    github: git@github.com:HorbieHuo/HorbieHuo.github.io.git
+    coding: git@git.coding.net:horbie_huo/HorbieHuo.git
   branch: master
   message: Site updated at {{ now("YYYY-MM-DD HH:mm:ss") }}
